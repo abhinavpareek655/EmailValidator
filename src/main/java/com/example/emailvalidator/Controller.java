@@ -15,6 +15,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
@@ -27,7 +28,6 @@ public class Controller {
     private Button sendButton;
     private Scene scene;
     private Stage stage;
-    private Parent root;
     public static String passwordGenerator(int length){
         int[][] randomRanges = {{48,57},{65,90},{97,122}};
         Random random = new Random();
@@ -40,13 +40,6 @@ public class Controller {
     }
     public void send(ActionEvent event){
         String emailid = emailField.getText();
-        try {
-            root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
         if(emailid.contains("@")&&emailid.contains(".")){
             String host = "smtp.gmail.com";
             Properties properties = System.getProperties();
@@ -77,6 +70,11 @@ public class Controller {
                 m.setText(message);
                 Transport.send(m);
                 System.out.println("Sent!!");
+                Parent root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
+                stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -86,4 +84,5 @@ public class Controller {
             emailLable.setText("Please Enter a valid email id!");
         }
     }
+
 }
