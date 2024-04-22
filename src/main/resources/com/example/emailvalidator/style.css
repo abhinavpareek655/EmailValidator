@@ -1,3 +1,6 @@
-#emailLable{
+#emailLabel{
+    -fx-alignment:center;
+}
+#otpLabel{
     -fx-alignment:center;
 }

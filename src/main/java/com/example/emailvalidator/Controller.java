@@ -21,13 +21,18 @@ import java.util.Random;
 
 public class Controller {
     @FXML
-    private Label emailLable;
+    private Label emailLabel;
     @FXML
     private TextField emailField;
     @FXML
     private Button sendButton;
     private Scene scene;
     private Stage stage;
+    @FXML
+    private TextField otpField;
+    @FXML
+    private Label otpLabel;
+    static String message = passwordGenerator(6);
     public static String passwordGenerator(int length){
         int[][] randomRanges = {{48,57},{65,90},{97,122}};
         Random random = new Random();
@@ -40,6 +45,7 @@ public class Controller {
     }
     public void send(ActionEvent event){
         String emailid = emailField.getText();
+        emailLabel.setText("please check your e-mail box");
         if(emailid.contains("@")&&emailid.contains(".")){
             String host = "smtp.gmail.com";
             Properties properties = System.getProperties();
@@ -60,7 +66,6 @@ public class Controller {
             session.setDebug(true);
             String from = "2022btcse002@curaj.ac.in";
             String subject = "Email Authentication";
-            String message = passwordGenerator(6);
             String to = emailid;
             MimeMessage m = new MimeMessage(session);
             try {
@@ -73,6 +78,8 @@ public class Controller {
                 Parent root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
+                String styleSheet1 = getClass().getResource("style.css").toExternalForm();
+                scene.getStylesheets().add(styleSheet1);
                 stage.setScene(scene);
                 stage.show();
             }
@@ -81,8 +88,19 @@ public class Controller {
             }
         }
         else{
-            emailLable.setText("Please Enter a valid email id!");
+            emailLabel.setText("Please Enter a valid email id!");
         }
     }
-
+    public void authenticate(ActionEvent event) throws IOException {
+        try {
+            if (otpField.getText().equals(message)) {
+                otpLabel.setText("OTP Verified");
+            } else {
+                otpLabel.setText("OTP does not match!");
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }

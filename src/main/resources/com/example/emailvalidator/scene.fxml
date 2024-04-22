@@ -18,7 +18,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Label fx:id="emailLable" layoutY="138.0" prefHeight="30.0" prefWidth="602.0" text="Enter your email">
+      <Label fx:id="emailLabel" layoutY="138.0" prefHeight="30.0" prefWidth="602.0" text="Enter your email">
          <font>
             <Font size="20.0" />
          </font>
